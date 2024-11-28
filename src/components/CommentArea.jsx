@@ -6,6 +6,7 @@ class CommentArea extends Component {
   state = {};
 
   render() {
+    //ricevo l'id da commentArea e poi lo passo nuovamente come prop per farlo arrivare a commentList
     const { id } = this.props;
     console.log(id);
     return (

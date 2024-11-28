@@ -5,6 +5,11 @@ class AddComment extends Component {
   state = {
     newComment: ""
   };
+
+  handleAdd = (e) => {
+    e.preventDefault();
+  };
+
   render() {
     return (
       <Form>
@@ -17,7 +22,7 @@ class AddComment extends Component {
             onChange={(e) => this.setState({ newComment: e.target.value })}
           />
         </Form.Group>
-        <Button className="mt-3 py-1" type="submit">
+        <Button className="mt-3 py-1" type="submit" onClick={this.handleAdd}>
           Add your comment
         </Button>
       </Form>

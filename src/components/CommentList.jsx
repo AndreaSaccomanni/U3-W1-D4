@@ -5,7 +5,7 @@ class CommentList extends Component {
   state = {
     comments: []
   };
-
+  //ricevo l'id come prop e lo uso per cercare i commenti di ogni singolo libro
   fetchCommmentList = () => {
     const { id } = this.props;
     fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
@@ -14,6 +14,7 @@ class CommentList extends Component {
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiYTlkYmRkMDNhNjAwMTUwOWJhNTMiLCJpYXQiOjE3MzI4MDI3ODksImV4cCI6MTczNDAxMjM4OX0.-qUlEXNSeD8L4AiPY83QV21uD4L-zuUOU4T8r71-rsc"
       }
     })
+      //la resp conterrà tutti i commenti di ogni singolo libro
       .then((resp) => {
         if (resp.ok) {
           console.log(resp);
@@ -22,6 +23,8 @@ class CommentList extends Component {
           throw new Error("Errore nella chiamata");
         }
       })
+      //i commenti saranno contenuti nella proprietà comments dello state e successivamente mappati
+      //per formare i listItem che conterranno tutti i commenti di ogni singolo libro
       .then((data) => {
         console.log(data);
         this.setState({
