@@ -1,0 +1,59 @@
+#root {
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Imposta larghezza al 100% per tutto il documento */
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Stile specifico per il footer */
+footer {
+  width: 100%;
+  padding: 20px 0;
+  background-color: #343a40; /* Colore scuro per il footer */
+  color: white;
+  position: relative;
+  bottom: 0;
+}
+
+.nav-link:hover {
+  color: rgb(32, 52, 56);
+}
