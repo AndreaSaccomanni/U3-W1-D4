@@ -5,6 +5,13 @@ class CommentList extends Component {
   state = {
     comments: []
   };
+
+  addCommment = (commentToAdd) => {
+    this.setState((allComments) => ({
+      comments: [...allComments.comments, commentToAdd]
+    }));
+  };
+
   //ricevo l'id come prop e lo uso per cercare i commenti di ogni singolo libro
   fetchCommmentList = () => {
     const { id } = this.props;
