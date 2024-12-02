@@ -46,6 +46,7 @@ class BookList extends Component {
               <Form.Label className="fs-2">Search your books</Form.Label>
               <Form.Control //prittier-ignored
                 type="text"
+                value={this.state.searchInput}
                 placeholder="Search books..."
                 onChange={(e) => this.setState({ searchInput: e.target.value })}
               />
