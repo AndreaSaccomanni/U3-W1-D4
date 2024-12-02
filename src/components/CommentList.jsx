@@ -6,15 +6,16 @@ class CommentList extends Component {
     comments: []
   };
 
-  addCommment = (commentToAdd) => {
-    this.setState((allComments) => ({
-      comments: [...allComments.comments, commentToAdd]
-    }));
-  };
+  // addCommment = (commentToAdd) => {
+  //   this.setState((allComments) => ({
+  //     comments: [...allComments.comments, commentToAdd]
+  //   }));
+  // };
 
   //ricevo l'id come prop e lo uso per cercare i commenti di ogni singolo libro
   fetchCommmentList = () => {
     const { id } = this.props;
+    console.log(id);
     fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
       headers: {
         Authorization:
@@ -30,6 +31,7 @@ class CommentList extends Component {
           throw new Error("Errore nella chiamata");
         }
       })
+
       //i commenti saranno contenuti nella proprietà comments dello state e successivamente mappati
       //per formare i listItem che conterranno tutti i commenti di ogni singolo libro
       .then((data) => {

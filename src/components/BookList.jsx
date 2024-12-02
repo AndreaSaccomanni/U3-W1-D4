@@ -2,6 +2,7 @@ import SingleBook from "./SingleBook";
 import books from "../books/scifi.json";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Component } from "react";
+import CommentArea from "./CommentArea";
 
 // BookList mappa l'array books che contiene tutti i libri di scifi.json (in questo caso)
 //e passa ogni oggetto dell'array come prop di SingleBook, quindi ci sarà una Card per ogni oggetto(libro)
@@ -9,7 +10,8 @@ import { Component } from "react";
 class BookList extends Component {
   state = {
     searchInput: "",
-    filteredBooks: books
+    filteredBooks: books,
+    asin: "0425264041"
   };
 
   handleSubmit = (e) => {
@@ -53,14 +55,24 @@ class BookList extends Component {
           </Form>
         </div>
 
-        <Row xs={1} sm={2} md={3} lg={4} className="gy-4 mb-5">
-          {filteredBooks.map((libro) => {
-            return (
-              <Col key={libro.asin}>
-                <SingleBook book={libro} />
-              </Col>
-            );
-          })}
+        <Row className="gy-4 mb-5">
+          <Col xs={12} sm={8} md={9}>
+            <Row xs={1} sm={2} className="gy-4 mb-5">
+              {filteredBooks.map((libro) => {
+                return (
+                  <>
+                    <Col xs={12} sm={6} key={libro.asin}>
+                      <SingleBook book={libro} />
+                    </Col>
+                  </>
+                );
+              })}
+            </Row>
+          </Col>
+
+          <Col xs={12} sm={4} md={3}>
+            <CommentArea asin={this.state.asin} />
+          </Col>
         </Row>
       </Container>
     );
