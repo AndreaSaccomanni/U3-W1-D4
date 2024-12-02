@@ -11,7 +11,11 @@ class BookList extends Component {
   state = {
     searchInput: "",
     filteredBooks: books,
-    asin: "0425264041"
+    asin: null
+  };
+
+  changeAsin = (newAsin) => {
+    this.setState({ asin: newAsin });
   };
 
   handleSubmit = (e) => {
@@ -60,11 +64,9 @@ class BookList extends Component {
             <Row xs={1} sm={2} className="gy-4 mb-5">
               {filteredBooks.map((libro) => {
                 return (
-                  <>
-                    <Col xs={12} sm={6} key={libro.asin}>
-                      <SingleBook book={libro} />
-                    </Col>
-                  </>
+                  <Col xs={12} sm={6} key={libro.asin}>
+                    <SingleBook book={libro} asin={this.state.asin} changeAsin={this.changeAsin} />
+                  </Col>
                 );
               })}
             </Row>

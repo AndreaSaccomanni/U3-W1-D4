@@ -3,11 +3,13 @@ import { Card } from "react-bootstrap";
 
 //creao una funzione con un oggetto book come prop
 class SingleBook extends Component {
-  state = {
-    selected: false
-  };
+  // state = {
+  //   selected: false
+  // };
   render() {
     const { book } = this.props;
+    console.log("props.asin", this.props.asin);
+    console.log("book.asin", this.props.book.asin);
     // console.log(book.asin);
     return (
       //la funzione ritorna una card composta da un'immagine e un titolo
@@ -16,8 +18,16 @@ class SingleBook extends Component {
 
       //passo l'id di ogni libro come props per farla arrivare a commentArea
 
-      <Card className={this.state.selected ? "border-danger" : " "}>
-        <Card.Img variant="top" src={book.img} onClick={() => this.setState({ selected: !this.state.selected })} />
+      //se l'asin della carta selezionata è uguale a quello della props si selezionerà
+      //ci sarà sempre solo una carta selezionata
+      <Card className={book.asin === this.props.asin ? "border-danger" : " "}>
+        <Card.Img
+          variant="top"
+          src={book.img}
+          onClick={() => {
+            this.props.changeAsin(book.asin);
+          }}
+        />
         <Card.Body>
           <Card.Title>
             <strong>Title: </strong>

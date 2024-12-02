@@ -14,9 +14,9 @@ class CommentList extends Component {
 
   //ricevo l'id come prop e lo uso per cercare i commenti di ogni singolo libro
   fetchCommmentList = () => {
-    const { id } = this.props;
-    console.log(id);
-    fetch("https://striveschool-api.herokuapp.com/api/comments/" + id, {
+    const { asin } = this.props;
+    console.log(asin);
+    fetch("https://striveschool-api.herokuapp.com/api/comments/" + asin, {
       headers: {
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiYTlkYmRkMDNhNjAwMTUwOWJhNTMiLCJpYXQiOjE3MzI4MDI3ODksImV4cCI6MTczNDAxMjM4OX0.-qUlEXNSeD8L4AiPY83QV21uD4L-zuUOU4T8r71-rsc"
@@ -45,8 +45,15 @@ class CommentList extends Component {
       });
   };
 
-  componentDidMount() {
-    this.fetchCommmentList();
+  componentDidUpdate(prevProps) {
+    //controllo per vedere se la prop è cambiata
+    //se la prop non cambia non ci sarà una nuova fetch
+    //al primo caricamento della pagina altrimenti partirebbe una fetch senza id
+    //che genererebbe una fetch con tutti i commenti di tutti i libri e non di un libro specifico
+    if (prevProps.asin != this.props.asin) {
+      console.log("prevProps", prevProps);
+      this.fetchCommmentList();
+    }
   }
 
   render() {

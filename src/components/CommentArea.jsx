@@ -5,14 +5,14 @@ import CommentList from "./CommentList";
 class CommentArea extends Component {
   render() {
     console.log(this.props);
-    //ricevo l'id da commentArea e poi lo passo nuovamente come prop per farlo arrivare a commentList
-    const { id } = this.props.asin;
 
-    console.log({ id });
+    const { asin } = this.props;
+
+    console.log(asin);
     return (
       <>
         <div>
-          <CommentList id={{ id }} />
+          <CommentList asin={asin} />
         </div>
         <div>
           <AddComment />
