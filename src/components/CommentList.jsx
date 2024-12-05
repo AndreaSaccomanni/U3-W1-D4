@@ -6,11 +6,11 @@ class CommentList extends Component {
     comments: []
   };
 
-  // addCommment = (commentToAdd) => {
-  //   this.setState((allComments) => ({
-  //     comments: [...allComments.comments, commentToAdd]
-  //   }));
-  // };
+  addCommentToState = (newComment) => {
+    this.setState((prevState) => ({
+      comments: [...prevState.comments, newComment]
+    }));
+  };
 
   //ricevo l'id come prop e lo uso per cercare i commenti di ogni singolo libro
   fetchCommmentList = () => {
@@ -44,15 +44,26 @@ class CommentList extends Component {
         console.log("Errore: ", e);
       });
   };
+  //farà una nuova fetch solo se la prop è cambiata quinid ho un nuovo id
+  //che genererà una fetch con un altro libro e quindi commenti di un altro libriio
+  //così avrò sempre i commenti relativi al libro cliccato, se clicco sulla card gia selezionata i commenti sono sempre i stessi
+  //la prop non cambia e quindi non c'è bisogno di fare una nuova fetch
 
   componentDidUpdate(prevProps) {
     //controllo per vedere se la prop è cambiata
     //se la prop non cambia non ci sarà una nuova fetch
     //al primo caricamento della pagina altrimenti partirebbe una fetch senza id
     //che genererebbe una fetch con tutti i commenti di tutti i libri e non di un libro specifico
+
     if (prevProps.asin != this.props.asin) {
       console.log("prevProps", prevProps);
       this.fetchCommmentList();
+    }
+
+    if (this.props.newComment && prevProps.newComment !== this.props.newComment) {
+      this.setState((prevState) => ({
+        comments: [...prevState.comments, this.props.newComment]
+      }));
     }
   }
 

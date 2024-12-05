@@ -14,6 +14,10 @@ class BookList extends Component {
     asin: null
   };
 
+  //c'è bisogno di un parametro perchè la funzione verrà usata per più libri
+  //ogni volta il parametro sarà diverso per ogni libro
+  //questa funzione verrà passata come props a ogni Singlebook
+  //verrà chiamata all'interno di ogni single book
   changeAsin = (newAsin) => {
     this.setState({ asin: newAsin });
   };

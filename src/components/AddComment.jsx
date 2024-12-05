@@ -3,29 +3,33 @@ import { Button, Form } from "react-bootstrap";
 
 class AddComment extends Component {
   state = {
-    newComment: "",
-    rate: "1"
+    comment: {
+      newComment: "",
+      rate: "1"
+    }
   };
 
   handleAdd = (e) => {
     e.preventDefault();
 
-    /*oggetto che verrà passato come props una volta inserito il commento
+    const { asin, onAddComment } = this.props; // Ottieni l'asin come prop dal genitore
+    const { newComment, rate } = this.state.comment;
+
+    // Oggetto da inviare
     const commentToAdd = {
-      comment: this.state.newComment,
-      rate: this.state.rate
+      comment: newComment,
+      rate: rate,
+      elementId: asin // ID specifico del libro
     };
-    //passo l'oggetto come props alla funzione che dovrà aggiungere il commento alla lista
-    this.props.addComment = commentToAdd;
-    //reset del campo input
-    this.setState({
-      newComment: "",
-      rate: 1
-    });*/
+
+    // Log per verificare il payload
+    console.log("Payload inviato:", commentToAdd);
+
     fetch("https://striveschool-api.herokuapp.com/api/comments/", {
       method: "POST",
-      body: JSON.stringify(this.state),
+      body: JSON.stringify(commentToAdd),
       headers: {
+        "Content-Type": "application/json",
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNiYTlkYmRkMDNhNjAwMTUwOWJhNTMiLCJpYXQiOjE3MzI4MDI3ODksImV4cCI6MTczNDAxMjM4OX0.-qUlEXNSeD8L4AiPY83QV21uD4L-zuUOU4T8r71-rsc"
       }
@@ -34,37 +38,57 @@ class AddComment extends Component {
         if (resp.ok) {
           return resp.json();
         } else {
+          console.log("Errore nella risposta:", resp.status, resp.statusText);
           throw new Error("Errore nella chiamata");
         }
       })
+      .then((data) => {
+        console.log("Risposta dell'API:", data);
+        onAddComment(data); // Aggiungi il commento alla lista nel genitore
+        this.setState({
+          comment: { newComment: "", rate: "1" } // Reset del form
+        });
+      })
       .catch((e) => {
-        console.log("Errore: ", e);
+        console.log("Errore:", e);
       });
   };
 
   render() {
     return (
-      <Form>
+      <Form onSubmit={this.handleAdd}>
         <Form.Group controlId="addComment">
           <Form.Label className="fs-5">Add your comment:</Form.Label>
-          <Form.Control //prittier-ignored
+          <Form.Control
             type="text"
             placeholder="Add a comment..."
-            value={this.state.newComment}
-            onChange={(e) => this.setState({ newComment: e.target.value })}
+            value={this.state.comment.newComment}
+            onChange={(e) =>
+              this.setState({
+                comment: { ...this.state.comment, newComment: e.target.value }
+              })
+            }
           />
-          <Form.Group controlId="rate">
-            <Form.Label className="fs-5">Rate:</Form.Label>
-            <Form.Select aria-label="Default select example" required>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Form.Select>
-          </Form.Group>
         </Form.Group>
-        <Button className="mt-3 py-1" type="submit" onClick={this.handleAdd}>
+        <Form.Group controlId="rate" className="mt-3">
+          <Form.Label className="fs-5">Rate:</Form.Label>
+          <Form.Select
+            value={this.state.comment.rate}
+            onChange={(e) =>
+              this.setState({
+                comment: { ...this.state.comment, rate: e.target.value }
+              })
+            }
+            required
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </Form.Select>
+        </Form.Group>
+        <Button className="mt-3 py-1" type="submit">
           Add your comment
         </Button>
       </Form>
